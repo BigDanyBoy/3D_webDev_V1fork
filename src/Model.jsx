@@ -4,11 +4,21 @@ Command: npx gltfjsx@6.2.10 ../public/model.glb
 */
 
 import React, { useRef } from 'react'
+import { useFrame } from "@react-three/fiber";
 import { useGLTF, PerspectiveCamera } from '@react-three/drei'
 
 export default function Model({...props}) {
   const group = useRef();
   const { nodes, materials } = useGLTF('/model.glb')
+  const Model = () => {
+  const group = useRef();
+  const { nodes, materials } = useGLTF("public/model.glb"); // Replace with the path to your model
+
+  useFrame(() => {
+    if (group.current) {
+      group.current.rotation.y += 0.005; // Adjust the rotation speed as needed
+    }
+  });
   return (
     <group {...props} dispose={null}>
       <pointLight intensity={54351.413} decay={2} position={[4.076, 5.904, -1.005]} rotation={[-1.839, 0.602, 1.932]} />
